@@ -1,8 +1,4 @@
-import getCabinets from "@/actions/client";
-import getParcelsByLocation from "@/actions/parcels";
-import useCabinet from "@/hooks/use-cabinet";
 import useLocation from "@/hooks/use-location";
-import useParcel from "@/hooks/use-parcels";
 import { cn } from "@/lib/utils";
 import { Location } from "@/types";
 interface LocationItemProps {
@@ -10,16 +6,9 @@ interface LocationItemProps {
 }
 const LocationItem: React.FC<LocationItemProps> = ({ location }) => {
   const locationStore = useLocation();
-  const cabinetStore = useCabinet();
-  const parcelStore = useParcel();
 
   const changeLocation = async (location: Location) => {
     locationStore.setActive(location);
-    const cabinets = await getCabinets(location.id);
-    cabinetStore.setState({ data: cabinets });
-    const parcels = await getParcelsByLocation(location.id);
-    parcelStore.setState({ data: parcels });
-    cabinetStore.setState({ state: "initial" });
   };
   return (
     <div
@@ -29,8 +18,6 @@ const LocationItem: React.FC<LocationItemProps> = ({ location }) => {
       )}
       onClick={() => {
         changeLocation(location);
-        // clear active cabinet
-        cabinetStore.setState({ activeCabinet: {} as any });
       }}
     >
       <p className="bg-[#686868] text-white w-8 text-center border rounded-sm text-sm h-7 flex justify-center items-center">

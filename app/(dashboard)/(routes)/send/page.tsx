@@ -1,23 +1,22 @@
 import Container from "@/components/ui/container";
 import Panel from "@/components/ui/panel";
-import SendForm from "./send/components/send-form";
 import Notifications from "@/components/notifications/notifications";
-import Details from "@/components/details/details";
+import SendForm from "./components/send-form";
 
 export const revalidate = 0;
-const HomePage = async () => {
+const SendPage = async () => {
   return (
     <Container>
       <div className="items-start justify-center gap-6 rounded-lg md:grid md:grid-cols-2">
         <Panel title="Latest Notifications">
           <Notifications />
         </Panel>
-        <Panel title="Details">
-          <Details />
+        <Panel title="Send">
+          <SendForm />
         </Panel>
       </div>
     </Container>
   );
 };
 
-export default HomePage;
+export default SendPage;

@@ -63,6 +63,7 @@ const SignUpForm = ({ className, ...props }: UserAuthFormProps) => {
         toast.error("Something went wrong");
       }
     } catch (error) {
+      toast.error("Something went wrong");
       console.log(error);
     } finally {
       setIsLoading(false);
@@ -158,12 +159,7 @@ const SignUpForm = ({ className, ...props }: UserAuthFormProps) => {
         disabled={isLoading}
         onClick={() => router.push("/login")}
       >
-        {isLoading ? (
-          <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-        ) : (
-          <User />
-        )}{" "}
-        Sign In
+        {<User />} Sign In
       </Button>
     </div>
   );

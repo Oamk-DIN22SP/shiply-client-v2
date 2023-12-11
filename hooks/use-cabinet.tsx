@@ -1,19 +1,17 @@
 import { create } from 'zustand';
 
-import { Cabinets } from '@/types';
-
 interface CabinetStore {
-  data: Cabinets[];
+  lockerID: string;
+  senderLocationId: string;
+  cabinet_number: string;
   setState: (state: Partial<CabinetStore>) => void;
-  state: String;
-  activeCabinet: Cabinets;
 }
 
 const useCabinet = create<CabinetStore>((set) => ({
-  data: [],
   setState: (state) => set(state),
-  state: "initial",
-  activeCabinet: {} as Cabinets,
+  lockerID: '',
+  senderLocationId: '',
+  cabinet_number: '',
 }));
 
 export default useCabinet;

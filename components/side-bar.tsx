@@ -27,31 +27,31 @@ const routes = [
   {
     label: "Dashboard",
     icon: LayoutDashboard,
-    href: "/dashboard",
+    href: "/",
     color: "text-sky-500",
   },
   {
     label: "Send",
     icon: Send,
-    href: "/conversation",
+    href: "/send",
     color: "text-violet-500",
   },
   {
     label: "Receive",
     icon: Download,
-    href: "/image",
+    href: "/receive",
     color: "text-green-500",
   },
   {
     label: "Track",
     icon: LocateFixedIcon,
-    href: "/video",
+    href: "/track",
     color: "text-orange-500",
   },
   {
     label: "History",
     icon: History,
-    href: "/music",
+    href: "/history",
     color: "text-emerald-500",
   },
   {
@@ -62,7 +62,7 @@ const routes = [
   {
     label: "TouchScreen",
     icon: ScreenShare,
-    href: "/code",
+    href: "/touchscreen",
     color: "text-green-700",
   },
 ];

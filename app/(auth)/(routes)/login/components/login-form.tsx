@@ -56,10 +56,11 @@ const LoginForm = ({ className, ...props }: UserAuthFormProps) => {
         client.setActive(response.user);
         client.setLogged(true);
         router.push("/");
-      }else {
+      } else {
         toast.error("Invalid credentials");
       }
     } catch (error) {
+      toast.error("Something went wrong");
       console.log(error);
     } finally {
       setIsLoading(false);
@@ -121,12 +122,7 @@ const LoginForm = ({ className, ...props }: UserAuthFormProps) => {
         disabled={isLoading}
         onClick={() => router.push("/signup")}
       >
-        {isLoading ? (
-          <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-        ) : (
-          <User />
-        )}{" "}
-        Sign Up
+        {<User />} Sign Up
       </Button>
     </div>
   );
