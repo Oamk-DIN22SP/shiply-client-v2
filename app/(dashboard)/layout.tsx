@@ -1,5 +1,6 @@
 "use client";
 import Navbar from "@/components/navbar";
+import Sidebar from "@/components/side-bar";
 import useClient from "@/hooks/client-store";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -18,12 +19,14 @@ export default function DashboardLayout({
     }
   }, []);
   return (
-    <>
-      <Navbar />
-      <div className="flex flex-row">
-        <div className="w-1/5 bg-gray-100 h-screen">side bar</div>
-        <div className="w-4/5 bg-gray-50">{children}</div>
+    <div className="h-full relative">
+      <div className="hidden h-full md:flex md:w-52 md:flex-col md:fixed md:inset-y-0 z-[80] bg-gray-900">
+        <Sidebar />
       </div>
-    </>
+      <main className="md:pl-72">
+        <Navbar />
+        {children}
+      </main>
+    </div>
   );
 }
