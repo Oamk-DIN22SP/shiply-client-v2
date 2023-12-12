@@ -19,7 +19,7 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({
     }
   }, []);
   return ( 
-    <div className="bg-sky-300 h-screen flex items-center">
+    <div className="bg-gray-200 h-screen flex items-center">
       <div className="min-w-[400px] mx-auto">
       <Image src="/logo.png" alt="logo" width="228" height="50" />
       {children}

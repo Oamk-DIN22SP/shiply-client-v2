@@ -1,15 +1,24 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuTrigger } from "./ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 import { Button } from "./ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import useClient from "@/hooks/client-store";
 import { Badge } from "./ui/badge";
+import { useRouter } from "next/navigation";
 const UserAvater = () => {
   const [isMounted, setIsMounted] = useState(false);
-
+  const router = useRouter();
   useEffect(() => {
     setIsMounted(true);
   }, []);
@@ -19,6 +28,13 @@ const UserAvater = () => {
   if (!isMounted) {
     return null;
   }
+
+  const handleLogout = () => {
+    router.push(`/login`);
+    client.setLogged(false);
+    client.setActive({} as any);
+  };
+
   return (
     <div className="ml-auto flex items-center gap-x-4 relative cursor-pointer">
       <DropdownMenu>
@@ -47,17 +63,30 @@ const UserAvater = () => {
               Profile
               <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
             </DropdownMenuItem>
-            <DropdownMenuItem className="cursor-pointer">
-              Notifications <Badge variant="destructive" className="w-1 h-4 ml-2 text-[12px] flex items-center justify-center">3</Badge>
+            <DropdownMenuItem className="cursor-pointer" onClick={() => {
+                router.push(`/`);
+              }}>
+              Notifications{" "}
+              <Badge
+                variant="destructive"
+                className="w-1 h-4 ml-2 text-[12px] flex items-center justify-center"
+              >
+                3
+              </Badge>
               <DropdownMenuShortcut>⌘N</DropdownMenuShortcut>
             </DropdownMenuItem>
-            <DropdownMenuItem className="cursor-pointer">
+            <DropdownMenuItem
+              className="cursor-pointer"
+              onClick={() => {
+                router.push(`/settings`);
+              }}
+            >
               Settings
               <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <DropdownMenuItem className="cursor-pointer">
+          <DropdownMenuItem className="cursor-pointer" onClick={handleLogout}>
             Log out
             <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
           </DropdownMenuItem>

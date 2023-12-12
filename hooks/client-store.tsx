@@ -21,7 +21,6 @@ const useClient = create(
     {
       name: "shiply-storage",
       storage: createJSONStorage(() => sessionStorage), 
-      // (optional) by default, 'localStorage' is used
     }
   )
 );
