@@ -6,7 +6,7 @@ const sendParcel = async (data: any) => {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ 
+    body: JSON.stringify({
       lockerID: data.lockerID,
       lockerNumber: data.lockerNumber,
       packageDepth: data.packageDepth,
@@ -23,11 +23,16 @@ const sendParcel = async (data: any) => {
       senderLocationId: data.senderLocationId,
       senderName: data.senderName,
       senderPhoneNumber: data.senderPhoneNumber,
-     }),
+      senderDropOffPoint: data.senderDropOffPoint,
+    }),
   });
 
   return response.json();
-}
+};
 
+const getParcelByID = async (parcelID: string) => {
+  const response = await fetch(`${URL}/${parcelID}`);
+  return response.json();
+};
 
-export { sendParcel };
+export { sendParcel, getParcelByID };

@@ -23,9 +23,10 @@ import useClient from "@/hooks/client-store";
 import Locations from "@/components/location/locations";
 import useLocation from "@/hooks/use-location";
 import { reserveByLocationId } from "@/actions/cabinets";
-import { sendParcel } from "@/actions/parcels";
+import { getParcelByID, sendParcel } from "@/actions/parcels";
 import useCabinet from "@/hooks/use-cabinet";
 import useParcel from "@/hooks/use-parcels";
+import SendParcelDetails from "@/components/details/send-parcel-details";
 
 const schema = z.object({
   senderName: z.string().min(3).max(100),
@@ -85,12 +86,16 @@ const SendForm = () => {
           data.senderLocationId = location_id;
           data.lockerNumber = cabinet_number;
           data.senderID = client.active.clientId;
+          data.senderDropOffPoint = locationStore.active?.title;
           // send package
           const res = await sendParcel(data);
           if (res?.success) {
             toast.success("Package sent successfully");
-            parcelStore.setState({ activeId: res.parcelId });
-            setStep(5);
+            const parcelData = await getParcelByID(res.parcelId);
+            if (parcelData.length > 0) {
+              parcelStore.setState({ data: parcelData });
+              setStep(5);
+            }
           } else {
             toast.error("Something went wrong");
           }
@@ -106,8 +111,12 @@ const SendForm = () => {
     }
   }
 
-  if (step === 5) {
-    return <div className="px-4">Details</div>;
+  if (step === 5 && parcelStore.data.length > 0) {
+    return (
+      <div className="px-4">
+        <SendParcelDetails parcel={parcelStore.data[0]} />
+      </div>
+    );
   }
 
   return (
