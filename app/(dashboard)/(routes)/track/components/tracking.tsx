@@ -18,13 +18,14 @@ const Tracking = () => {
       toast.error("Please enter a tracking number");
       return;
     }
-    // if (trackingNumber.length !== 15) {
-    //   toast.error("Tracking number must be 15 digits");
-    // }
+    if (trackingNumber.length !== 15) {
+      toast.error("Tracking number must be 15 digits (starting STNXXX...)");
+      return;
+    }
     //fetch the parcel
     const parcel = await trackParcel(trackingNumber);
     console.log(parcel);
-    if (!parcel[0].status) {
+    if (!parcel.length) {
       toast.error("Parcel not found");
     } else {
       setDetailsState(true);
