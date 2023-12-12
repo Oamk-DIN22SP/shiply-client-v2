@@ -30,9 +30,14 @@ const sendParcel = async (data: any) => {
   return response.json();
 };
 
+const trackParcel = async (trackingNumber: string) => {
+  const response = await fetch(`${URL}/trackParcel/${trackingNumber}`);
+  return response.json();
+};
+
 const getParcelByID = async (parcelID: string) => {
   const response = await fetch(`${URL}/${parcelID}`);
   return response.json();
 };
 
-export { sendParcel, getParcelByID };
+export { sendParcel, getParcelByID, trackParcel };
