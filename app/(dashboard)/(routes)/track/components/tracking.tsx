@@ -35,7 +35,12 @@ const Tracking = () => {
 
   if(detailsState) {
     return (
-      <ParcelTrackingDetails status={status} />
+      <ParcelTrackingDetails status={status} onRefresh={
+        () => {
+          setDetailsState(false);
+          setStatus("");
+        }
+      } />
     )
   }
 
