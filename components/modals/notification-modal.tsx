@@ -1,6 +1,5 @@
 "use client";
 import { toast } from "react-hot-toast";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { Modal } from "@/components/ui/modal";

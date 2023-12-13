@@ -3,7 +3,6 @@ import { clientDelete } from "@/actions/client";
 import { Button } from "./ui/button";
 import { AlertModal } from "@/components/modals/alert-modal";
 import useClient from "@/hooks/client-store";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 

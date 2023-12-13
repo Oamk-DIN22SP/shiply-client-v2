@@ -1,6 +1,6 @@
+"use client";
 import Container from "@/components/ui/container";
 import Panel from "@/components/ui/panel";
-import Notifications from "@/components/notifications/notifications";
 import {
   Table,
   TableBody,
@@ -12,100 +12,106 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import { useEffect, useState } from "react";
+import { parcelHistory } from "@/actions/parcels";
+import { Parcel } from "@/types";
+import useClient from "@/hooks/client-store";
+import { ExternalLink } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
-const parcels = [
-  {
-    trackingNumber: "STN0011245554",
-    status: "Delivered",
-    sender: "John Doe",
-    senderEmail: "john@gmail.com",
-    receiver: "Jane Doe",
-    receiverEmail: "jane@gmail.com",
-    date: "12th Dec 2023",
-  },
-  {
-    trackingNumber: "STN0011245555",
-    status: "Reserved",
-    sender: "Alice Smith",
-    senderEmail: "alice@gmail.com",
-    receiver: "Bob Johnson",
-    receiverEmail: "bob@gmail.com",
-    date: "13th Dec 2023",
-  },
-  {
-    trackingNumber: "STN0011245556",
-    status: "Sent",
-    sender: "Charlie Brown",
-    senderEmail: "charlie@gmail.com",
-    receiver: "Lucy Williams",
-    receiverEmail: "lucy@gmail.com",
-    date: "14th Dec 2023",
-  },
-  {
-    trackingNumber: "STN0011245557",
-    status: "Received",
-    sender: "David Miller",
-    senderEmail: "david@gmail.com",
-    receiver: "Emma Davis",
-    receiverEmail: "emma@gmail.com",
-    date: "15th Dec 2023",
-  },
-  {
-    trackingNumber: "STN0011245558",
-    status: "Delivered",
-    sender: "Frank Johnson",
-    senderEmail: "frank@gmail.com",
-    receiver: "Grace Turner",
-    receiverEmail: "grace@gmail.com",
-    date: "16th Dec 2023",
-  },
-  {
-    trackingNumber: "STN0011245559",
-    status: "Reserved",
-    sender: "Henry Adams",
-    senderEmail: "henry@gmail.com",
-    receiver: "Ivy Brown",
-    receiverEmail: "ivy@gmail.com",
-    date: "17th Dec 2023",
-  },
-];
+const badgeColor = (status: string) => {
+  switch (status) {
+    case "sent":
+      return "bg-blue-500";
+    case "delivered":
+      return "bg-green-500";
+    case "picked":
+      return "bg-yellow-500";
+    case "received":
+      return "bg-orange-500";
+    case "reserved":
+      return "bg-red-500";
+    default:
+      return "bg-gray-500";
+  }
+};
 
+const HistoryPage = () => {
+  const client = useClient();
+  const [parcels, setParcels] = useState([] as Parcel[]);
+  const router = useRouter();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await parcelHistory(client.active.clientEmail);
+        setParcels(res);
+      } catch (error) {
+        console.error("Error fetching parcels:", error);
+      }
+    };
 
-export const revalidate = 0;
-const HistoryPage = async () => {
+    fetchData();
+  }, [client.active.clientEmail]);
+
   return (
     <Container>
       <div className="items-start justify-center gap-6 rounded-lg md:grid md:grid-cols-1 px-4">
         <Panel title="History of your recent activity">
-          <Table>
-            <TableCaption>A list of your recent activity.</TableCaption>
-            <TableHeader className="font-semibold bg-orange-200">
-              <TableRow>
-                <TableHead>Tracking Number</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Sender</TableHead>
-                <TableHead>Sender Email</TableHead>
-                <TableHead>Receiver</TableHead>
-                <TableHead>Receiver Email</TableHead>
-                <TableHead>Date</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {parcels.map((parcel) => (
-                <TableRow key={parcel.trackingNumber} className="hover:bg-slate-300 hover:cursor-pointer">
-                  <TableCell className="font-medium">
-                    {parcel.trackingNumber}
-                  </TableCell>
-                  <TableCell><Badge>{parcel.status}</Badge></TableCell>
-                  <TableCell>{parcel.sender}</TableCell>
-                  <TableCell>{parcel.senderEmail}</TableCell>
-                  <TableCell>{parcel.receiver}</TableCell>
-                  <TableCell>{parcel.receiverEmail}</TableCell>
-                  <TableCell>{parcel.date}</TableCell>
+          {parcels.length > 0 ? ( 
+            <Table>
+              <TableCaption>A list of your recent activity.</TableCaption>
+              <TableHeader className="font-semibold bg-orange-200">
+                <TableRow>
+                  <TableHead>Tracking Number</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Sender</TableHead>
+                  <TableHead>Sender Email</TableHead>
+                  <TableHead>Receiver</TableHead>
+                  <TableHead>Receiver Email</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {parcels.map((parcel) => (
+                  <TableRow
+                    key={parcel.trackingNumber}
+                    className="hover:bg-slate-300 hover:cursor-pointer"
+                  >
+                    <TableCell className="font-medium">
+                      {parcel.trackingNumber}
+                    </TableCell>
+                    <TableCell>
+                      <Badge
+                        className={`${badgeColor(parcel.status)} text-white`}
+                        
+                      >{parcel.status.toUpperCase()}</Badge>
+                    </TableCell>
+                    <TableCell>{parcel.senderName}</TableCell>
+                    <TableCell>{parcel.senderEmailAddress}</TableCell>
+                    <TableCell>{parcel.receiverName}</TableCell>
+                    <TableCell>{parcel.receiverEmailAddress}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          ) : (
+            <div className="text-center">
+              <p className="text-lg font-semibold">
+                You haven&apos;t sent / receive any parcel yet.
+              </p>
+              <p className="text-md font-normal">
+                Send your first parcel now! <br />
+                <Button
+                  className="mt-4 bg-[#17a8b3]"
+                  onClick={
+                    () => router.push("/send")
+                  }
+                >
+                  Send parcel <ExternalLink className="ml-2 inline-block" />
+                </Button>
+              </p>
+            </div>
+          )}
         </Panel>
       </div>
     </Container>

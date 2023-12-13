@@ -30,6 +30,18 @@ const sendParcel = async (data: any) => {
   return response.json();
 };
 
+const parcelHistory = async (email: string) => {
+  const response = await fetch(`${URL}/email`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email }),
+  });
+
+  return response.json();
+};
+
 const trackParcel = async (trackingNumber: string) => {
   const response = await fetch(`${URL}/trackParcel/${trackingNumber}`);
   return response.json();
@@ -40,4 +52,4 @@ const getParcelByID = async (parcelID: string) => {
   return response.json();
 };
 
-export { sendParcel, getParcelByID, trackParcel };
+export { sendParcel, getParcelByID, trackParcel, parcelHistory };
