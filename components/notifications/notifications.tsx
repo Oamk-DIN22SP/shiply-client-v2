@@ -56,7 +56,7 @@ const Notifications = () => {
         </SelectContent>
       </Select>
       <div className="flex flex-col gap-2 pt-4">
-        {data.map((notification) => (
+        { data.length && data.map((notification) => (
           <NotificatioItem key={notification.id} notification={notification} />
         ))}
       </div>

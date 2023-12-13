@@ -36,4 +36,16 @@ const clientRegister = async ({
   return response.json();
 };
 
-export { clientLogin, clientRegister };
+const clientDelete = async (email: string) => {
+  const response = await fetch(`${URL}/delete`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email }),
+  });
+
+  return response.json();
+};
+
+export { clientLogin, clientRegister, clientDelete };
