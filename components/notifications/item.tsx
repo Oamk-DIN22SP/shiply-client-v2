@@ -96,7 +96,7 @@ const NotificatioItem: React.FC<NotificationItemProps> = ({ notification }) => {
         {notification?.title}
         <br />
       </p>
-      <p className="text-xs text-[#686868] ml-auto">{timeAgo(notification.time)}</p>
+      <p className="text-xs text-[#686868] ml-auto whitespace-nowrap w-fit">{timeAgo(notification.time)}</p>
     </div>
   );
 };

@@ -18,11 +18,11 @@ import { Badge } from "./ui/badge";
 import { useRouter } from "next/navigation";
 const UserAvater = () => {
   const [isMounted, setIsMounted] = useState(false);
+  const client = useClient();
   const router = useRouter();
   useEffect(() => {
     setIsMounted(true);
   }, []);
-  const client = useClient();
   const notificationCount = 3;
 
   if (!isMounted) {
@@ -30,9 +30,13 @@ const UserAvater = () => {
   }
 
   const handleLogout = () => {
-    router.push(`/login`);
     client.setLogged(false);
     client.setActive({} as any);
+    sessionStorage.removeItem("shiply-storage");
+    // if (typeof window !== "undefined") {
+    //   sessionStorage.removeItem("shiply-storage");
+    //   router.push("/login");
+    // }
   };
 
   return (

@@ -1,4 +1,3 @@
-"use client";
 import { Urbanist } from "next/font/google";
 
 import ToastProvider from "@/providers/toast-provider";
@@ -8,8 +7,8 @@ import { ModalProvider } from "@/providers/modal-provider";
 const font = Urbanist({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Shiply Driver App",
-  description: "Driver App for Shiply",
+  title: "Shiply Consumer App",
+  description: "App for Shiply consumers",
 };
 
 export default function RootLayout({
