@@ -1,3 +1,6 @@
+"use client";
+
+import useNotification from "@/hooks/notification";
 import NotificatioItem from "./item";
 import {
   Select,
@@ -8,40 +11,31 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import useLoader from "@/hooks/loader";
+import { useEffect, useState } from "react";
+import Loader from "../loader";
+import { getAllNotification } from "@/actions/notifications";
+import useClient from "@/hooks/client-store";
+import { Notification } from "@/types";
 
 const Notifications = () => {
-  const data = [
-    {
-      id: 1,
-      title: "Your package has been delivered",
-      time: "2 hours ago",
-      status: "delivered",
-    },
-    {
-      id: 2,
-      title: "Your package has been received",
-      time: "2 hours ago",
-      status: "received",
-    },
-    {
-      id: 3,
-      title: "Your package has been picked up",
-      time: "2 hours ago",
-      status: "picked",
-    },
-    {
-      id: 4,
-      title: "Your package has been sent",
-      time: "2 hours ago",
-      status: "sent",
-    },
-    {
-      id: 5,
-      title: "Your package has been reserved",
-      time: "2 hours ago",
-      status: "reserved",
-    },
-  ];
+  const [data, setData] = useState([] as Notification[]);
+  const notificationStore = useNotification();
+  const client = useClient();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const notifications = await getAllNotification(client.active.clientEmail);
+        notificationStore.setState({ data: notifications });
+        setData(notifications);
+        console.log(notificationStore.data);
+      } catch (error) {
+        console.error("Error fetching locations:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div className="py-4 px-4">

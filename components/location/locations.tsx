@@ -17,7 +17,6 @@ const Locations = () => {
         loaderStore.setLoading(true);
         const locations = await getLocation();
         locationStore.setState({ data: locations });
-        locationStore.setActive(locations[0]);
       } catch (error) {
         console.error("Error fetching locations:", error);
       } finally {
@@ -39,7 +38,7 @@ const Locations = () => {
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-2">
       {!loaderStore.loading && locationStore?.data?.length > 0 ? (
         locationStore?.data?.map((location) => (
           <LocationItem key={location.id} location={location} />

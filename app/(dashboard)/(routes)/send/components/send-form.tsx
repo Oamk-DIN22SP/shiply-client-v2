@@ -30,17 +30,17 @@ import SendParcelDetails from "@/components/details/send-parcel-details";
 
 const schema = z.object({
   senderName: z.string().min(3).max(100),
-  senderEmailAddress: z.string().min(3).max(100).optional(),
-  senderAddress: z.string().min(3).max(100).optional(),
+  senderEmailAddress: z.string().min(3).max(100),
+  senderAddress: z.string().optional(),
   senderPhoneNumber: z.string().min(3).max(100),
   receiverName: z.string().min(3).max(100),
   receiverEmailAddress: z.string().email(),
-  receiverAddress: z.string().min(3).max(100).optional(),
+  receiverAddress: z.string().optional(),
   receiverPhoneNumber: z.string().min(3).max(100),
   packageWidth: z.string().min(1),
   packageHeight: z.string().min(1),
-  packageDepth: z.string().min(1).optional(),
-  packageMass: z.string().min(1).optional(),
+  packageDepth: z.string().optional(),
+  packageMass: z.string().optional(),
 });
 
 type FormValues = z.infer<typeof schema>;

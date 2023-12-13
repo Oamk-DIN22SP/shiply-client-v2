@@ -1,15 +1,17 @@
 const URL = `${process.env.NEXT_PUBLIC_API_URL}/notifications`;
 
-const getAll = async () => {
+const getAllNotification = async (email: String) => {
   const response = await fetch(`${URL}`, {
-    method: "GET",
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
+    body: JSON.stringify({
+      userEmail: email,
+    }),
   });
-
-  return response.json();
+  const data = await response.json();
+  return data;
 };
 
-
-export { getAll };
+export { getAllNotification };

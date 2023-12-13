@@ -55,3 +55,14 @@ export interface Client {
   clientName: string;
   clientEmail: string;
 };
+
+export interface Notification {
+  id: string;
+  title: string;
+  parcel_id: string;
+  receiver: string;
+  sender: string;
+  read: string;
+  status: string;
+  time: string;
+};

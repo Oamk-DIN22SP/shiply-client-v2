@@ -1,6 +1,7 @@
 import useLocation from "@/hooks/use-location";
 import { cn } from "@/lib/utils";
 import { Location } from "@/types";
+import { CheckCheck } from "lucide-react";
 interface LocationItemProps {
   location: Location;
 }
@@ -13,8 +14,8 @@ const LocationItem: React.FC<LocationItemProps> = ({ location }) => {
   return (
     <div
       className={cn(
-        "flex flex-row gap-2 items-center hover:cursor-pointer hover:bg-[#fedbc28e] p-4 border rounded-sm",
-        location?.id === locationStore.active?.id && "bg-[#FEDBC2]"
+        "flex flex-row gap-2 items-center hover:cursor-pointer hover:bg-[#D7FAD1] px-4 py-2 border rounded-sm",
+        location?.id === locationStore.active?.id && "bg-[#D7FAD1]"
       )}
       onClick={() => {
         changeLocation(location);
@@ -28,6 +29,7 @@ const LocationItem: React.FC<LocationItemProps> = ({ location }) => {
         <br />
         {location?.address}
       </p>
+      {location?.id === locationStore.active?.id && <CheckCheck className="ml-auto text-green-600" />}
     </div>
   );
 };

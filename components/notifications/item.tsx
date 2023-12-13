@@ -1,7 +1,8 @@
-import { cn } from "@/lib/utils";
+import { cn, timeAgo } from "@/lib/utils";
 import { Loader, Package, PackageCheck, PackageSearch, Truck } from "lucide-react";
+import { Notification } from "@/types";
 interface NotificationItemProps {
-  notification: any;
+  notification: Notification;
 }
 const NotificatioItem: React.FC<NotificationItemProps> = ({ notification }) => {
 
@@ -24,7 +25,7 @@ const NotificatioItem: React.FC<NotificationItemProps> = ({ notification }) => {
   return (
     <div
       className={cn(
-        "flex flex-row gap-2 items-center hover:cursor-pointer hover:bg-[#fedbc28e] p-2 px-3 border rounded-sm", color(notification?.status))}
+        "flex flex-row gap-2 items-center hover:cursor-pointer hover:bg-[#D7FAD1] p-2 px-3 border rounded-sm", color(notification?.status))}
       // onClick={() => {
       //   changeNotification();
       // }}
@@ -40,7 +41,7 @@ const NotificatioItem: React.FC<NotificationItemProps> = ({ notification }) => {
         {notification?.title}
         <br />
       </p>
-      <p className="text-xs text-[#686868] ml-auto">{notification?.time}</p>
+      <p className="text-xs text-[#686868] ml-auto">{timeAgo(notification.time)}</p>
     </div>
   );
 };
