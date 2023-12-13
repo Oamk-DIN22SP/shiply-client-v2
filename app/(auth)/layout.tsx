@@ -1,7 +1,5 @@
 "use client";
-import useClient from "@/hooks/client-store";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 interface AuthLayoutProps {
@@ -10,14 +8,18 @@ interface AuthLayoutProps {
 const AuthLayout: React.FC<AuthLayoutProps> = ({
   children
 }) => {
-  const client = useClient();
-  const router = useRouter();
 
   useEffect(() => {
-    if (client.isLogged) {
-      router.push("/");
+    const storage = sessionStorage.getItem("shiply-storage");
+    if (storage) {
+      const client = JSON.parse(storage);
+      if (client.state.isLogged) {
+        window.location.href = "/";
+      }
     }
+    
   }, []);
+
   return ( 
     <div className="bg-gray-200 h-screen flex items-center">
       <div className="min-w-[400px] mx-auto">

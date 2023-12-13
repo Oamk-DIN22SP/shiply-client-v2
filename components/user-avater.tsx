@@ -30,13 +30,8 @@ const UserAvater = () => {
   }
 
   const handleLogout = () => {
-    client.setLogged(false);
-    client.setActive({} as any);
     sessionStorage.removeItem("shiply-storage");
-    // if (typeof window !== "undefined") {
-    //   sessionStorage.removeItem("shiply-storage");
-    //   router.push("/login");
-    // }
+    window.location.href = "/login";
   };
 
   return (

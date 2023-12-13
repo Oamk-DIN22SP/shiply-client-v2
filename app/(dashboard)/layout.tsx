@@ -1,8 +1,6 @@
 "use client";
 import Navbar from "@/components/navbar";
 import Sidebar from "@/components/side-bar";
-import useClient from "@/hooks/client-store";
-import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function DashboardLayout({
@@ -10,13 +8,15 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const client = useClient();
-  const router = useRouter();
-
   useEffect(() => {
-    if (!client.isLogged) {
-      router.push("/login");
+    const storage = sessionStorage.getItem("shiply-storage");
+    if (storage) {
+      const client = JSON.parse(storage);
+      if (!client.state.isLogged) {
+        window.location.href = "/login";
+      }
     }
+    
   }, []);
   return (
     <div className="h-full relative">

@@ -10,17 +10,16 @@ import toast from "react-hot-toast";
 const Settings = () => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
   const client = useClient();
   const onDelete = async () => {
     try {
       setLoading(true);
       await clientDelete(client.active.clientEmail);
-      client.setActive({} as any);
-      client.setLogged(false);
-      router.refresh();
-      router.push(`/signup`);
-      toast.success("Category deleted.");
+      sessionStorage.removeItem("shiply-storage");
+      toast.success("Account deleted.");
+      setTimeout(() => {
+        window.location.href = "/login";
+      }, 1000);
     } catch (error: any) {
       toast.error(error);
     } finally {
