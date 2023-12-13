@@ -7,7 +7,7 @@ export const revalidate = 0;
 const SendPage = async () => {
   return (
     <Container>
-      <div className="items-start justify-center gap-6 rounded-lg md:grid md:grid-cols-2">
+      <div className="items-start justify-center gap-6 rounded-lg md:grid md:grid-cols-2 grid-cols-1">
         <Panel title="Latest Notifications">
           <Notifications />
         </Panel>
