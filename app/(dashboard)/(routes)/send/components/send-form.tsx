@@ -318,8 +318,10 @@ const SendForm = () => {
               </Button>
             )}
             {step === 4 && (
-              <Button className="w-fit ml-auto" type="submit">
-                Send <Send className="ml-2" />
+              <Button className="w-fit ml-auto" type="submit" disabled={isLoading}>
+                {
+                  isLoading ? "Sending..." : "Send"
+                } <Send className="ml-2" />
               </Button>
             )}
           </div>
